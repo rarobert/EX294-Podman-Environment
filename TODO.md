@@ -1,0 +1,3 @@
+- [ ] Consolidated question list (from waseem-h and mateuszstompor)
+- [ ] Script to grade the current state of the lab
+- [x] Script to automate deployment/tear down

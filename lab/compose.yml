@@ -1,0 +1,60 @@
+---
+version: '3.9'
+
+services:
+  control_node:
+    container_name: ex294_control
+    hostname: control.example.com
+    image: &ubi ex294:10-ubi-init
+    restart: always
+    networks:
+      rhce_network:
+        ipv4_address: 172.28.128.100
+
+  node_one:
+    container_name: ex294_node_one
+    hostname: node1.example.com
+    image: *ubi
+    restart: unless-stopped
+    networks:
+      rhce_network:
+        ipv4_address: 172.28.128.101
+  
+  node_two:
+    container_name: ex294_node_two
+    hostname: node2.example.com
+    image: *ubi
+    restart: unless-stopped
+    networks:
+      rhce_network:
+        ipv4_address: 172.28.128.102
+  
+  node_three:
+    container_name: ex294_node_three
+    hostname: node3.example.com
+    image: *ubi
+    restart: unless-stopped
+    networks:
+      rhce_network:
+        ipv4_address: 172.28.128.103
+
+  node_four:
+    container_name: ex294_node_four
+    hostname: node4.example.com
+    image: *ubi
+    restart: unless-stopped
+    networks:
+      rhce_network:
+        ipv4_address: 172.28.128.104
+
+# TODO: Add volumes to nodes 4 and 5 for storage tasks
+
+networks:
+  rhce_network:
+    name: ex294_env
+    external: false
+    ipam:
+      config:
+        - subnet: 172.28.128.0/24
+          ip_range: 172.28.128.0/24
+          gateway: 172.28.128.1

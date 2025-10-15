@@ -1,0 +1,43 @@
+FROM rockylinux:10-ubi-init
+
+# Prepare systemd
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
+systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+rm -f /lib/systemd/system/multi-user.target.wants/*;\
+rm -f /etc/systemd/system/*.wants/*;\
+rm -f /lib/systemd/system/local-fs.target.wants/*; \
+rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+rm -f /lib/systemd/system/basic.target.wants/*;\
+rm -f /lib/systemd/system/anaconda.target.wants/*;
+VOLUME [ "/sys/fs/cgroup" ]
+
+# EX294 Setup
+USER root
+ARG ROOT_PASSWORD=qwerty
+RUN echo -n "root:$ROOT_PASSWORD" | chpasswd
+
+RUN dnf install iproute openssh-server openssh-clients -y
+
+RUN sed -ie 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+RUN sed -ie 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+RUN systemctl enable sshd
+
+# # Remove "'System is booting up ... pam_nologin(8)' message on ssh."
+RUN cat << EOF > /usr/lib/systemd/system/nologin.service
+[Unit]
+Description=Remove nologin files
+
+[Service]
+Type=oneshot
+ExecStart=rm /run/nologin
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+RUN systemctl enable nologin.service
+RUN systemctl set-default multi-user.target
+
+CMD ["/usr/sbin/init"]
