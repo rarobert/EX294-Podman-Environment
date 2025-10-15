@@ -5,3 +5,7 @@ There are questions from two different Github sources:
 Deploy the lab practice environment and attempt to answer these questions.
 
 There are also local copies of the questions in this folder.
+
+
+## Note
+Where required, change the hostnames to match what is deployed in this lab e.g. 'node1.example.com'
