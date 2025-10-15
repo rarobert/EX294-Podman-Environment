@@ -17,10 +17,11 @@ USER root
 ARG ROOT_PASSWORD=qwerty
 RUN echo -n "root:$ROOT_PASSWORD" | chpasswd
 
-RUN dnf install iproute openssh-server openssh-clients sshpass -y
+RUN dnf install sudo iproute openssh-server openssh-clients sshpass -y
 
 RUN sed -ie 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 RUN sed -ie 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+RUN sed -ie 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/g' /etc/ssh/sshd_config
 RUN systemctl enable sshd
 
 # Remove "'System is booting up ... pam_nologin(8)' message on ssh."

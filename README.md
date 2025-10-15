@@ -12,6 +12,9 @@ Access to# the control node can be performed manually with `podman exec -it ex29
 
 The `bin/restart.sh` script will bring down the stack; removing containers and the container network, and redeploy the lab.
 
+
+If you have to leave the control node's terminal, take note of the question for later review.
+
 ## Setup
 Following other similar setups, this compose file will create one control node and four managed nodes:
 - control.example.com (172.28.128.100)
@@ -24,4 +27,4 @@ Following other similar setups, this compose file will create one control node a
 These nodes do NOT:
 - Have Ansible or Python installed on them.
 - Have password-less SSH access (although password root access is configured).
-- `sshpass` is also installed.
+- Some packages outside of the UBI are installed for QoL (sshpass, sudo)
