@@ -24,3 +24,4 @@ Following other similar setups, this compose file will create one control node a
 These nodes do NOT:
 - Have Ansible or Python installed on them.
 - Have password-less SSH access (although password root access is configured).
+- `sshpass` is also installed.
