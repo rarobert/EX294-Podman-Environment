@@ -1,11 +1,12 @@
 #!/bin/bash
-sudo dnf install podman podman-compose -y
+sudo dnf install podman podman-compose python3 python3-pip -y
+
 read -p "Container root password: (qwerty) " ROOT_PASSWORD
 if [[ $ROOT_PASSWORD ]] then
     ARGS=('--build-arg=ROOT_PASSWORD=${ROOT_PASSWORD}')
 fi
 
-podman build -t ex294:10-ubi-init -f lab/Containerfile ${ARGS[@]}.
+podman build -t ex294:10-ubi -f lab/Containerfile ${ARGS[@]}.
 unset ROOT_PASSWORD
 
 # --env-file file

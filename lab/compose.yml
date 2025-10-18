@@ -5,7 +5,7 @@ services:
   control_node:
     container_name: ex294_control
     hostname: control.example.com
-    image: &ubi ex294:10-ubi-init
+    image: &ubi ex294:10-ubi
     restart: always
     networks:
       rhce_network:
