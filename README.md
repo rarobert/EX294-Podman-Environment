@@ -1,6 +1,6 @@
 A practice environment for the Red Hat Certified Engineer (RHCE) EX294 exam.
 
-> [!CAUTION]
+> [!NOTE]
 > Requires a Linux host
 
 > [!TIP]
